@@ -79,7 +79,7 @@ export default new Vuex.Store({
       state.formErr = "";
       let isEmpty = !state.enteredCardTitle;
       if (!isEmpty) {
-        state.lists[state.selectedListIndex].cards.push({
+        state.lists[state.selectedListIndex].cards.unshift({
           title: state.enteredCardTitle,
           description: state.enteredCardDescription,
           isFavourite: state.isFavourite,
