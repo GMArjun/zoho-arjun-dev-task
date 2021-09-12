@@ -48,6 +48,15 @@ export default {
       return this.lists.some((i) => i.cards.length);
     },
   },
+  watch: {
+    "$store.state.lists": {
+      handler() {
+        localStorage.setItem("lists", JSON.stringify(this.lists));
+        this.SET_FILTERS();
+      },
+      deep: true,
+    },
+  },
   methods: {
     ...mapMutations(["SET_FILTERS", "SET_SORT"]),
   },

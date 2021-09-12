@@ -65,8 +65,6 @@ export default new Vuex.Store({
             title: state.enteredListTitle,
             cards: [],
           });
-          localStorage.setItem("lists", JSON.stringify(state.lists));
-          this.commit("SET_FILTERS");
           state.enteredListTitle = "";
           state.listModalShow = false;
         } else {
@@ -78,8 +76,6 @@ export default new Vuex.Store({
     },
     [DELETE_LIST](state, index) {
       state.lists.splice(index, 1);
-      localStorage.setItem("lists", JSON.stringify(state.lists));
-      this.commit("SET_FILTERS");
     },
     [UPDATE_CARD_TITLE](state, event) {
       state.enteredCardTitle = event.target.value.trim();
@@ -97,8 +93,6 @@ export default new Vuex.Store({
           description: state.enteredCardDescription,
           isFavourite: state.isFavourite,
         });
-        localStorage.setItem("lists", JSON.stringify(state.lists));
-        this.commit("SET_FILTERS");
         state.enteredCardTitle = "";
         state.enteredCardDescription = "";
         state.cardModalShow = false;
@@ -110,16 +104,12 @@ export default new Vuex.Store({
       state.lists[listIndex].cards = state.lists[listIndex].cards.filter(
         (i) => i.createdAt !== cardCreatedAt
       );
-      localStorage.setItem("lists", JSON.stringify(state.lists));
-      this.commit("SET_FILTERS");
     },
     [TOGGLE_FAVOURITE](state, { event, listIndex, cardCreatedAt }) {
       let card = state.lists[listIndex].cards.filter(
         (i) => i.createdAt == cardCreatedAt
       )[0];
       card.isFavourite = event.target.checked;
-      localStorage.setItem("lists", JSON.stringify(state.lists));
-      this.commit("SET_FILTERS");
     },
     [SET_SEARCH_KEYWORD](state, e) {
       state.enteredSearchStr = e.target.value.trim();
