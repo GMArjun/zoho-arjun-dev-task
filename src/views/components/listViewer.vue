@@ -1,7 +1,7 @@
 <template>
   <main>
     <Sort />
-    <div class="over-flow">
+    <div class="over-flow" id="horizontal-scroll">
       <div class="lists_container" v-if="filteredLists.length">
         <template v-for="(list, i) in filteredLists">
           <div class="list" :key="i">

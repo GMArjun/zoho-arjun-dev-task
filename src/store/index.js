@@ -50,6 +50,7 @@ export default new Vuex.Store({
     },
     [ADD_LIST](state) {
       state.formErr = "";
+      let scrollContainer = document.getElementById("horizontal-scroll");
       let isEmpty = !state.enteredListTitle;
 
       let isValid =
@@ -67,6 +68,9 @@ export default new Vuex.Store({
           });
           state.enteredListTitle = "";
           state.listModalShow = false;
+          setTimeout(function () {
+            scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+          }, 100);
         } else {
           state.formErr = "List title already exist, It should be unique";
         }
