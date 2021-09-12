@@ -16,6 +16,7 @@ import {
   SET_FILTERS,
   SET_SEARCH_KEYWORD,
   SET_SORT,
+  UPDATE_LIST,
 } from "./mutations.type";
 
 Vue.use(Vuex);
@@ -162,6 +163,9 @@ export default new Vuex.Store({
       }
 
       state.filteredLists = sortable;
+    },
+    [UPDATE_LIST](state, payload) {
+      state.lists = payload;
     },
   },
   actions: {},

@@ -185,6 +185,7 @@ main {
         border-bottom: 2px solid var(--grey);
         height: calc(100vh - 245px);
         overflow-y: auto;
+        position: relative;
         &-card {
           background-color: var(--white);
           padding: 12px;
@@ -213,6 +214,13 @@ main {
             color: var(--gray);
             margin-top: 10px;
           }
+        }
+        .empty-placeholder {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
       &__footer {
@@ -385,4 +393,8 @@ main {
       color: var(--white);
     }
   }
+}
+
+.summa {
+  display: flex;
 }

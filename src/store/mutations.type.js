@@ -11,3 +11,4 @@ export const TOGGLE_FAVOURITE = "TOGGLE_FAVOURITE";
 export const SET_FILTERS = "SET_FILTERS";
 export const SET_SEARCH_KEYWORD = "SET_SEARCH_KEYWORD";
 export const SET_SORT = "SET_SORT";
+export const UPDATE_LIST = "UPDATE_LIST";

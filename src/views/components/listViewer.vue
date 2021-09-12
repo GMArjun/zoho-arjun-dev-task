@@ -1,6 +1,7 @@
 <template>
   <main>
     <Sort />
+
     <div
       class="over-flow"
       :class="{ heightfix: heightAdjust, heightAuto: !filteredLists.length }"
@@ -20,7 +21,13 @@
                 <img src="@/assets/bin1.png" alt="delete-ico" />
               </button>
             </div>
-            <div class="list__body">
+
+            <draggable
+              class="list__body"
+              :list="list.cards"
+              @change="log"
+              group="people"
+            >
               <template v-if="list.cards && list.cards.length">
                 <div
                   class="list__body-card"
@@ -75,7 +82,8 @@
                 </div>
               </template>
               <div class="empty-placeholder" v-else>No Cards available</div>
-            </div>
+            </draggable>
+
             <div class="list__footer">
               <button
                 class="list__footer-add-btn"
@@ -94,11 +102,12 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import draggable from "vuedraggable";
 import Sort from "./sort.vue";
 
 export default {
   name: "Home",
-  components: { Sort },
+  components: { Sort, draggable },
   computed: {
     ...mapState(["filteredLists"]),
     heightAdjust() {
@@ -111,7 +120,11 @@ export default {
       "DELETE_LIST",
       "TOGGLE_FAVOURITE",
       "DELETE_CARD",
+      "UPDATE_LIST",
     ]),
+    log() {
+      this.UPDATE_LIST(this.filteredLists);
+    },
   },
 };
 </script>
