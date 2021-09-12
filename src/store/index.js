@@ -11,12 +11,18 @@ const UPDATE_CARD_DESCRIPTION = "UPDATE_CARD_DESCRIPTION";
 const TOGGLE_LIST_MODAL = "TOGGLE_LIST_MODAL";
 const TOGGLE_CARD_MODAL = "TOGGLE_CARD_MODAL";
 const TOGGLE_FAVOURITE = "TOGGLE_FAVOURITE";
+const SET_FILTERS = "SET_FILTERS";
+const SET_SEARCH_KEYWORD = "SET_SEARCH_KEYWORD";
+const SET_SORT = "SET_SORT";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     lists: JSON.parse(localStorage.getItem("lists")) || [],
+    sortedLists: [],
+    selectedSort: "default",
+    enteredSearchStr: "",
     enteredListTitle: "",
     enteredCardTitle: "",
     enteredCardDescription: "",
@@ -52,6 +58,7 @@ export default new Vuex.Store({
       if (!isEmpty) {
         if (isValid) {
           state.lists.push({
+            createdAt: new Date(),
             title: state.enteredListTitle,
             cards: [],
           });
@@ -80,6 +87,7 @@ export default new Vuex.Store({
       let isEmpty = !state.enteredCardTitle;
       if (!isEmpty) {
         state.lists[state.selectedListIndex].cards.unshift({
+          createdAt: new Date(),
           title: state.enteredCardTitle,
           description: state.enteredCardDescription,
           isFavourite: state.isFavourite,
@@ -100,6 +108,53 @@ export default new Vuex.Store({
       state.lists[listIndex].cards[cardIndex].isFavourite =
         event.target.checked;
       localStorage.setItem("lists", JSON.stringify(state.lists));
+    },
+    [SET_SEARCH_KEYWORD](state, e) {
+      state.enteredSearchStr = e.target.value.trim();
+      this.commit("SET_FILTERS");
+    },
+    [SET_SORT](state, e) {
+      state.selectedSort = e.target.value;
+      this.commit("SET_FILTERS");
+    },
+    [SET_FILTERS](state) {
+      let sortable = JSON.parse(JSON.stringify(state.lists));
+
+      sortable.forEach((list) => {
+        switch (state.selectedSort) {
+          case "ascending":
+            list.cards = list.cards.sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+            break;
+          case "descending":
+            list.cards = list.cards.sort((a, b) =>
+              b.title.localeCompare(a.title)
+            );
+            break;
+          case "created":
+            list.cards = list.cards.sort((a, b) => b.createdAt - a.createdAt);
+            break;
+          case "default":
+            break;
+        }
+      });
+
+      if (state.enteredSearchStr) {
+        let searchStr = state.enteredSearchStr.toLowerCase();
+
+        sortable = sortable
+          .filter((element) => {
+            return (element.cards = element.cards.filter(
+              (i) =>
+                i.title.toLowerCase().includes(searchStr) ||
+                i.description.toLowerCase().includes(searchStr)
+            ));
+          })
+          .filter((element) => element.cards.length);
+      }
+
+      state.sortedLists = sortable;
     },
   },
   actions: {},

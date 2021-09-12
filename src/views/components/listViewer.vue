@@ -1,11 +1,14 @@
 <template>
   <main>
+    <Sort />
     <div class="over-flow">
-      <div class="lists_container" v-if="lists.length">
-        <template v-for="(list, i) in lists">
+      <div class="lists_container" v-if="sortedLists.length">
+        <template v-for="(list, i) in sortedLists">
           <div class="list" :key="i">
             <div class="list__header">
-              <div class="list__header-title">{{ list.title }}</div>
+              <div class="list__header-title">
+                {{ list.title }}
+              </div>
               <div class="list__header-card-count">
                 {{ (list.cards && list.cards.length) || 0 }}
               </div>
@@ -79,11 +82,13 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import Sort from "./sort.vue";
 
 export default {
   name: "Home",
+  components: { Sort },
   computed: {
-    ...mapState(["lists"]),
+    ...mapState(["sortedLists"]),
   },
   methods: {
     ...mapMutations([
