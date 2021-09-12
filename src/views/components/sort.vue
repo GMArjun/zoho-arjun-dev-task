@@ -1,5 +1,5 @@
 <template>
-  <div class="sort__by" v-if="lists.length">
+  <div class="sort__by" v-if="isCardsAvailable">
     <label class="labl" v-for="(sort, i) in sortTypes" :key="i">
       <input
         type="radio"
@@ -44,6 +44,9 @@ export default {
   },
   computed: {
     ...mapState(["lists", "selectedSort"]),
+    isCardsAvailable() {
+      return this.lists.some((i) => i.cards.length);
+    },
   },
   methods: {
     ...mapMutations(["SET_FILTERS", "SET_SORT"]),

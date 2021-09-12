@@ -21,8 +21,8 @@ export default new Vuex.Store({
   state: {
     lists: JSON.parse(localStorage.getItem("lists")) || [],
     sortedLists: [],
-    selectedSort: "default",
-    enteredSearchStr: "",
+    selectedSort: localStorage.getItem("sortType") || "default",
+    enteredSearchStr: localStorage.getItem("searchKey") || "",
     enteredListTitle: "",
     enteredCardTitle: "",
     enteredCardDescription: "",
@@ -63,6 +63,7 @@ export default new Vuex.Store({
             cards: [],
           });
           localStorage.setItem("lists", JSON.stringify(state.lists));
+          this.commit("SET_FILTERS");
           state.enteredListTitle = "";
           state.listModalShow = false;
         } else {
@@ -75,6 +76,7 @@ export default new Vuex.Store({
     [DELETE_LIST](state, index) {
       state.lists.splice(index, 1);
       localStorage.setItem("lists", JSON.stringify(state.lists));
+      this.commit("SET_FILTERS");
     },
     [UPDATE_CARD_TITLE](state, event) {
       state.enteredCardTitle = event.target.value.trim();
@@ -93,6 +95,7 @@ export default new Vuex.Store({
           isFavourite: state.isFavourite,
         });
         localStorage.setItem("lists", JSON.stringify(state.lists));
+        this.commit("SET_FILTERS");
         state.enteredCardTitle = "";
         state.enteredCardDescription = "";
         state.cardModalShow = false;
@@ -103,18 +106,22 @@ export default new Vuex.Store({
     [DELETE_CARD](state, { listIndex, cardIndex }) {
       state.lists[listIndex].cards.splice(cardIndex, 1);
       localStorage.setItem("lists", JSON.stringify(state.lists));
+      this.commit("SET_FILTERS");
     },
     [TOGGLE_FAVOURITE](state, { event, listIndex, cardIndex }) {
       state.lists[listIndex].cards[cardIndex].isFavourite =
         event.target.checked;
       localStorage.setItem("lists", JSON.stringify(state.lists));
+      this.commit("SET_FILTERS");
     },
     [SET_SEARCH_KEYWORD](state, e) {
       state.enteredSearchStr = e.target.value.trim();
+      localStorage.setItem("searchKey", state.enteredSearchStr);
       this.commit("SET_FILTERS");
     },
     [SET_SORT](state, e) {
       state.selectedSort = e.target.value;
+      localStorage.setItem("sortType", state.selectedSort);
       this.commit("SET_FILTERS");
     },
     [SET_FILTERS](state) {
