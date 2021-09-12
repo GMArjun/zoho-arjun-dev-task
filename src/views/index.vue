@@ -9,7 +9,7 @@
 
 <script>
 import Header from "./components/header.vue";
-import ListsViewer from "./components/listViewer.vue";
+import ListsViewer from "./components/listviewer";
 import AddList from "./components/addList.vue";
 import AddCard from "./components/addCard.vue";
 
