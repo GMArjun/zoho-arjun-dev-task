@@ -30,22 +30,30 @@
 
                     <div class="favourites">
                       <input
-                        :id="`fav+${i}${j}`"
+                        :id="`fav+${card.createdAt}`"
                         type="checkbox"
                         :checked="card.isFavourite"
                         @input="
                           TOGGLE_FAVOURITE({
                             event: $event,
                             listIndex: i,
-                            cardIndex: j,
+                            cardCreatedAt: card.createdAt,
                           })
                         "
                       />
-                      <label class="fav-star" :for="`fav+${i}${j}`"></label>
+                      <label
+                        class="fav-star"
+                        :for="`fav+${card.createdAt}`"
+                      ></label>
                     </div>
                     <button
                       class="card-delete"
-                      @click="DELETE_CARD({ listIndex: i, cardIndex: j })"
+                      @click="
+                        DELETE_CARD({
+                          listIndex: i,
+                          cardCreatedAt: card.createdAt,
+                        })
+                      "
                     >
                       <img
                         height="19"

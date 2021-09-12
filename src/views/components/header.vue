@@ -5,7 +5,6 @@
       <div class="nav__search">
         <input
           type="text"
-          :value="enteredSearchStr"
           placeholder="Search"
           class="nav__search_bar"
           @input="SET_SEARCH_KEYWORD"
@@ -19,14 +18,11 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   name: "Header",
   methods: {
     ...mapMutations(["TOGGLE_LIST_MODAL", "SET_SEARCH_KEYWORD"]),
-  },
-  computed: {
-    ...mapState(["enteredSearchStr"]),
   },
 };
 </script>

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+const moment = require("moment");
 
 import {
   ADD_LIST,
@@ -24,7 +25,7 @@ export default new Vuex.Store({
     lists: JSON.parse(localStorage.getItem("lists")) || [],
     filteredLists: [],
     selectedSort: localStorage.getItem("sortType") || "default",
-    enteredSearchStr: localStorage.getItem("searchKey") || "",
+    enteredSearchStr: "",
     enteredListTitle: "",
     enteredCardTitle: "",
     enteredCardDescription: "",
@@ -60,7 +61,7 @@ export default new Vuex.Store({
       if (!isEmpty) {
         if (isValid) {
           state.lists.push({
-            createdAt: new Date(),
+            createdAt: moment(new Date()).format("DD/MM/YYYY mm:ss"),
             title: state.enteredListTitle,
             cards: [],
           });
@@ -91,7 +92,7 @@ export default new Vuex.Store({
       let isEmpty = !state.enteredCardTitle;
       if (!isEmpty) {
         state.lists[state.selectedListIndex].cards.unshift({
-          createdAt: new Date(),
+          createdAt: moment(new Date()).format("DD/MM/YYYY mm:ss"),
           title: state.enteredCardTitle,
           description: state.enteredCardDescription,
           isFavourite: state.isFavourite,
@@ -105,28 +106,29 @@ export default new Vuex.Store({
         state.formErr = "Card title is required";
       }
     },
-    [DELETE_CARD](state, { listIndex, cardIndex }) {
-      state.lists[listIndex].cards.splice(cardIndex, 1);
+    [DELETE_CARD](state, { listIndex, cardCreatedAt }) {
+      state.lists[listIndex].cards = state.lists[listIndex].cards.filter(
+        (i) => i.createdAt !== cardCreatedAt
+      );
       localStorage.setItem("lists", JSON.stringify(state.lists));
       this.commit("SET_FILTERS");
     },
-    [TOGGLE_FAVOURITE](state, { event, listIndex, cardIndex }) {
-      state.lists[listIndex].cards[cardIndex].isFavourite =
-        event.target.checked;
+    [TOGGLE_FAVOURITE](state, { event, listIndex, cardCreatedAt }) {
+      let card = state.lists[listIndex].cards.filter(
+        (i) => i.createdAt == cardCreatedAt
+      )[0];
+      card.isFavourite = event.target.checked;
       localStorage.setItem("lists", JSON.stringify(state.lists));
       this.commit("SET_FILTERS");
     },
     [SET_SEARCH_KEYWORD](state, e) {
       state.enteredSearchStr = e.target.value.trim();
-      localStorage.setItem("searchKey", state.enteredSearchStr);
       this.commit("SET_FILTERS");
-      localStorage.setItem("searchKey", state.enteredSearchStr);
     },
     [SET_SORT](state, e) {
       state.selectedSort = e.target.value;
       localStorage.setItem("sortType", state.selectedSort);
       this.commit("SET_FILTERS");
-      localStorage.setItem("sortType", state.selectedSort);
     },
     [SET_FILTERS](state) {
       let sortable = JSON.parse(JSON.stringify(state.lists));
