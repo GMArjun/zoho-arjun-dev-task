@@ -2,8 +2,8 @@
   <main>
     <Sort />
     <div class="over-flow">
-      <div class="lists_container" v-if="sortedLists.length">
-        <template v-for="(list, i) in sortedLists">
+      <div class="lists_container" v-if="filteredLists.length">
+        <template v-for="(list, i) in filteredLists">
           <div class="list" :key="i">
             <div class="list__header">
               <div class="list__header-title">
@@ -88,7 +88,7 @@ export default {
   name: "Home",
   components: { Sort },
   computed: {
-    ...mapState(["sortedLists"]),
+    ...mapState(["filteredLists"]),
   },
   methods: {
     ...mapMutations([

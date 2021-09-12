@@ -5,8 +5,8 @@
       <div class="nav__search">
         <input
           type="text"
-          placeholder="Search"
           :value="enteredSearchStr"
+          placeholder="Search"
           class="nav__search_bar"
           @input="SET_SEARCH_KEYWORD"
         />

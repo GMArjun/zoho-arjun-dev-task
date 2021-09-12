@@ -22,7 +22,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     lists: JSON.parse(localStorage.getItem("lists")) || [],
-    sortedLists: [],
+    filteredLists: [],
     selectedSort: localStorage.getItem("sortType") || "default",
     enteredSearchStr: localStorage.getItem("searchKey") || "",
     enteredListTitle: "",
@@ -120,11 +120,13 @@ export default new Vuex.Store({
       state.enteredSearchStr = e.target.value.trim();
       localStorage.setItem("searchKey", state.enteredSearchStr);
       this.commit("SET_FILTERS");
+      localStorage.setItem("searchKey", state.enteredSearchStr);
     },
     [SET_SORT](state, e) {
       state.selectedSort = e.target.value;
       localStorage.setItem("sortType", state.selectedSort);
       this.commit("SET_FILTERS");
+      localStorage.setItem("sortType", state.selectedSort);
     },
     [SET_FILTERS](state) {
       let sortable = JSON.parse(JSON.stringify(state.lists));
@@ -163,7 +165,7 @@ export default new Vuex.Store({
           .filter((element) => element.cards.length);
       }
 
-      state.sortedLists = sortable;
+      state.filteredLists = sortable;
     },
   },
   actions: {},
