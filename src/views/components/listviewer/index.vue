@@ -17,6 +17,7 @@
               :list="list.cards"
               @change="log"
               group="people"
+              :move="checkMove"
             >
               <template v-if="list.cards && list.cards.length">
                 <Card
@@ -50,7 +51,7 @@ export default {
   name: "Home",
   components: { Sort, draggable, Header, Footer, Card },
   computed: {
-    ...mapState(["filteredLists"]),
+    ...mapState(["filteredLists", "enteredSearchStr"]),
     heightAdjust() {
       return this.filteredLists.some((i) => i.cards && i.cards.length);
     },
@@ -59,6 +60,9 @@ export default {
     ...mapMutations(["UPDATE_LIST"]),
     log() {
       this.UPDATE_LIST(this.filteredLists);
+    },
+    checkMove() {
+      if (this.enteredSearchStr) return false;
     },
   },
 };
