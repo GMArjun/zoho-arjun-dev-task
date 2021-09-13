@@ -13,6 +13,7 @@
             <Header :title="list.title" :cards="list.cards" :index="i" />
 
             <draggable
+              :animation="300"
               class="list__body"
               :list="list.cards"
               @change="log"
