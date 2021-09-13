@@ -16,6 +16,7 @@ import {
   SET_FILTERS,
   SET_SEARCH_KEYWORD,
   SET_SORT,
+  UPDATE_LIST,
 } from "./mutations.type";
 
 Vue.use(Vuex);
@@ -140,7 +141,11 @@ export default new Vuex.Store({
             );
             break;
           case "created":
-            list.cards = list.cards.sort((a, b) => b.createdAt - a.createdAt);
+            list.cards = list.cards.sort((a, b) =>
+              moment(b.createdAt, "DD/MM/YYYY mm:ss").diff(
+                moment(a.createdAt, "DD/MM/YYYY mm:ss")
+              )
+            );
             break;
           case "default":
             break;
@@ -162,6 +167,9 @@ export default new Vuex.Store({
       }
 
       state.filteredLists = sortable;
+    },
+    [UPDATE_LIST](state, payload) {
+      state.lists = payload;
     },
   },
   actions: {},

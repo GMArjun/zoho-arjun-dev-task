@@ -8,7 +8,7 @@
         :value="sort.value"
         @change="SET_SORT"
       />
-      <div>{{ sort.label }}</div>
+      <div><span>Sort by - </span>{{ sort.label }}</div>
     </label>
   </div>
 </template>
@@ -22,19 +22,19 @@ export default {
       sortTypes: [
         {
           value: "default",
-          label: "Sort by - Default",
+          label: "Default",
         },
         {
           value: "ascending",
-          label: "Sort by - Name ( Ascending )",
+          label: "Name ( Ascending )",
         },
         {
           value: "descending",
-          label: "Sort by - Name ( Descending )",
+          label: "Name ( Descending )",
         },
         {
           value: "created",
-          label: "Sort by - Created Time",
+          label: "Created Time",
         },
       ],
     };
