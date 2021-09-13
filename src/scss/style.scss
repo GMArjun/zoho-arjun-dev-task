@@ -8,7 +8,7 @@
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
 
 body {
   font-family: var(--primary-font);
@@ -393,7 +393,7 @@ main {
   align-items: center;
   justify-content: center;
   padding-top: 20px;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   @media screen and (max-width: 767px) {
     gap: 7px;
   }
@@ -414,6 +414,12 @@ main {
       @media screen and (max-width: 767px) {
         padding: 10px 10px;
         min-width: unset;
+        span {
+          display: none;
+        }
+      }
+      @media screen and (max-width: 575px) {
+        font-size: 10px;
       }
     }
     & > input:checked + div {
