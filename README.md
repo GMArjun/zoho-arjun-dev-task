@@ -8,7 +8,7 @@ Netlify URL: [https://mystifying-minsky-17b0a4.netlify.app/](https://mystifying-
 
 ## Things to Handle
 
-1. If there is no list, you should show No list available info on the center. - DONE
+1. If there is no list, you should show No list available info on the center. - [&check;]
 2. By clicking the Add List button, we should be able to add a list. - DONE
    a) Clicking on the Add List button should show a dialog containing the input to get
    the list's title. - DONE
